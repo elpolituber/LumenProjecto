@@ -14,7 +14,8 @@
 $factory->define(App\User::class, function (Faker\Generator $faker) {
     return [
         'name' => $faker->name,
-        'email' => $faker->unique()->email,
-        ''
+        'email' =>$faker->unique()->email,
+      //  'user_id'=>$faker->numberBetween($min = 0, $max = 30),
+
     ];
 });

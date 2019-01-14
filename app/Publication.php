@@ -27,6 +27,6 @@ class Publication extends Model implements AuthenticatableContract, Authorizable
      * @var array
      */
     protected $hidden = [
-        'password',
+        
     ];
 }

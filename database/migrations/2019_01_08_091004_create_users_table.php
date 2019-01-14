@@ -14,7 +14,7 @@ class CreateUsersTable extends Migration
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
-            $table->increments('id_user');
+            $table->increments('user_id');
             $table->string('nombre');
             $table->string('apellido');
 	        $table->string('foto');	
@@ -24,19 +24,16 @@ class CreateUsersTable extends Migration
             $table->string('pasword');
             $table->timestamps();
         });
-
-        Schema::create('publications', function (Blueprint $table) {
-            $table->increments('id_publication');
-            $table->string('detalle');           
-	        //primary key foreing key user
-	    });
         
-        Schema::create('chats', function (Blueprint $table) {
-            $table->increments('id_publication');
-            $table->string('detalle');           
+        
+   /*     Schema::create('friends', function (Blueprint $table) {
+            $table->increments('id_frinds');
+            $table->string('id_user_id')->unsigned();           
+	        $table->string('id_user_id')->unsigned();           
+            $table->timestamps();           
 	        //primary key foreing key user	
 	    });
-    
+     */   
     }
 
     /**
