@@ -15,8 +15,12 @@ class CreatePublicationsTable extends Migration
     {
         
         Schema::create('publications', function (Blueprint $table) {
+            
             $table->increments('id');
-            $table->string('detalle');           
+            $table->string('detalle');
+            $table->unsignedInteger('users_id');
+            $table->foreign('users_id')->references('id')->on('users');
+           
 	        //primary key foreing key user
 	    });
     }

@@ -29,4 +29,5 @@ class Chat extends Model implements AuthenticatableContract, AuthorizableContrac
     protected $hidden = [
         
     ];
+    
 }
