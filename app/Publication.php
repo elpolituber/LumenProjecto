@@ -18,7 +18,7 @@ class Publication extends Model implements AuthenticatableContract, Authorizable
      * @var array
      */
     protected $fillable = [
-        'detalle',
+      
     ];
 
     /**
@@ -29,4 +29,7 @@ class Publication extends Model implements AuthenticatableContract, Authorizable
     protected $hidden = [
         
     ];
+    public function user(){
+        return $this->belongsTo('App\User');
+    }
 }

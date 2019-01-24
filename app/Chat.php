@@ -18,7 +18,7 @@ class Chat extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var array
      */
     protected $fillable = [
-        'detalle',
+      //  'detalle',
     ];
 
     /**
@@ -29,5 +29,12 @@ class Chat extends Model implements AuthenticatableContract, AuthorizableContrac
     protected $hidden = [
         
     ];
-    
+    public function historial(){
+        return $this->hasMany('App\Historial');
+        
+    }
+    public function user(){
+        return $this->belongsTo('App\User');
+    }
+      
 }

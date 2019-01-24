@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
 use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
 
-class User extends Model 
+class Historial extends Model implements AuthenticatableContract, AuthorizableContract
 {
     use Authenticatable, Authorizable;
 
@@ -18,7 +18,7 @@ class User extends Model
      * @var array
      */
     protected $fillable = [
-        'nombre','apellido','foto','usuario','email','carrera',
+        'detalle',
     ];
 
     /**
@@ -27,13 +27,10 @@ class User extends Model
      * @var array
      */
     protected $hidden = [
-        'password',
-    ];
-    public function userChat(){
-        return $this->hasMany('App\Chat');
         
-    }
-    public function userPublication(){
-        return $this->hasMany('App\Publication');
-    }
+    ];
+    
+    public function chat(){
+        return $this->belongsTo('App\Chat');
+    }   
 }

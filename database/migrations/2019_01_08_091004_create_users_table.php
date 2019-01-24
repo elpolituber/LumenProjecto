@@ -23,18 +23,12 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('pasword');
             $table->timestamps();
-        
+            $table->rememberToken();
+            $table->strng('api_token');
         });
         
         
-   /*     Schema::create('friends', function (Blueprint $table) {
-            $table->increments('id_frinds');
-            $table->string('id_user_id')->unsigned();           
-	        $table->string('id_user_id')->unsigned();           
-            $table->timestamps();           
-	        //primary key foreing key user	
-	    });
-     */   
+       
     }
 
     /**
