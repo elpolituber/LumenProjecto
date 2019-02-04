@@ -11,6 +11,20 @@
 |
 */
 
-$router->get('/', function () use ($router) {
+/*$router->get('/', function () use ($router) {
     return $router->app->version();
-});
+});*/
+
+
+    //Usuarios
+        $router->post('/login', ['uses' =>'UserController@validarUsuario']);
+        $router->post('/users', ['uses' => 'UserController@post']);
+        $router->get('/users', ['uses' => 'UserController@get']);
+        $router->delete('/users', ['uses' => 'UserController@eliminarUsuario']);
+
+    //publicaciones
+        $router->put('/publications', ['uses' => 'PublicacionController@editarPublicacion']);
+        $router->post('/publications', ['uses' =>'PublicacionController@crearPublicacion']);
+        $router->delete('/publications',['uses' => 'PublicacionController@eliminarPublicacion']);
+        $router->get('/publications',['uses' =>'PublicacionController@mostrarPublicacion']);
+    

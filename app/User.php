@@ -18,7 +18,7 @@ class User extends Model
      * @var array
      */
     protected $fillable = [
-        'nombre','apellido','foto','usuario','email','carrera',
+        'nombre','apellido','usuario','email','carrera',
     ];
 
     /**
@@ -29,11 +29,7 @@ class User extends Model
     protected $hidden = [
         'password',
     ];
-    public function userChat(){
-        return $this->hasMany('App\Chat');
-        
-    }
-    public function userPublication(){
+    public function publications(){
         return $this->hasMany('App\Publication');
     }
 }

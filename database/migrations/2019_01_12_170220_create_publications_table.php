@@ -18,8 +18,8 @@ class CreatePublicationsTable extends Migration
             
             $table->increments('id');
             $table->string('detalle');
-            $table->unsignedInteger('users_id');
-            $table->foreign('users_id')->references('id')->on('users');
+            $table->unsignedInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users');
            
 	        //primary key foreing key user
 	    });

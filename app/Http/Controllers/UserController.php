@@ -2,12 +2,11 @@
 
 namespace App\Http\Controllers;
 Use Exception;
-//use App\User;
+use App\User;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
-use Laravel\Lumen\Routing\Controller as BaseController;
 
 class UserController extends Controller
 {
@@ -24,11 +23,12 @@ class UserController extends Controller
     }
     function get(Request $data)
     {
-       $id = $data['id'];
+       //$id = $data['id'];
+       $id=1;
        if ($id == null) {
-          return users::get();
+          return User::get();
        } else {
-          return users::findOrFail($id);
+          return User::findOrFail($id);
        }
     }
     //
@@ -40,7 +40,6 @@ class UserController extends Controller
             $user = users::create([
                 'nombre'=>$result['nombre'],
                 'apellido'=>$result['apellido'],
-                'foto'=>$result['foto'],
                 'usuario'=>$result['usuario'],
                 'email'=>$result['email'],
                 'carrera'=>$result['carrera'],
@@ -51,17 +50,23 @@ class UserController extends Controller
                 
                 return response()->json($e,400);
              }
-                return response()->json($board,200);    
+                return response()->json($user,200);    
         }
 
-    public function mostrarUsuario(Request $data){
-      
-    }
     public function validarUsuario(Request $data){
+      $result = $data->json()->all();
+      $email = DB::table('users')
+            ->select('nombre', 'pasword')
+            ->where('email',$result['email']);
+      if($email->email == $result['email'] && $email->pasword == $result['pasword']){
 
-    }
-    public function editarUsuario(Request $data){
+         return true;
 
+      }else{
+         
+         return false;
+      }
+            
     }
     public function eliminarUsuario(Request $data){
 
