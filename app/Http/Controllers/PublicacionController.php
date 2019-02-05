@@ -21,26 +21,36 @@ class PublicacionController extends Controller
     
     }
     
-    public function crearPublicacion(Request $deta){
-        try{
-            DB::beginTransaction();
-            $result = $data->json()->all();
+    public function crearPublicacion(Request $data){
+        $result =$data->json()->all();
             $fori=DB::table('users')
                         ->select('id')
-                        ->where('email',$result['email']);
+                        ->where('email',$result['email'])->value('id');
+                        
+            /*$public=DB::table('publications')->insert([
+                            [
+                             'detalle'=> $result['detalle'], 
+                             'id_user'=>$fori
+                             ]
+                            ]);
+          */  try{
+            DB::beginTransaction();
             $public = publication::create([
                     'detalle'=>$result['detalle'],
                     'id_user'=>$fori,
+                    "created_at"=>null,
+	                "updated_at"=>null
             ]);
             DB::commit();
         }catch (Exception $e) {
        
-       return response()->json($e,400);
+       return response()->json($fori,400);
     }
        return response()->json($public,200);   
     }
     
     public function editarPublicacion(Request $data){
+
     }   
     public function mostrarPublicacion(){
         

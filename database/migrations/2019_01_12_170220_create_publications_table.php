@@ -20,7 +20,7 @@ class CreatePublicationsTable extends Migration
             $table->string('detalle');
             $table->unsignedInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');
-           
+            $table->timestamps();
 	        //primary key foreing key user
 	    });
     }

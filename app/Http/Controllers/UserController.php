@@ -23,8 +23,7 @@ class UserController extends Controller
     }
     function get(Request $data)
     {
-       //$id = $data['id'];
-       $id=1;
+       $id = $data['id'];
        if ($id == null) {
           return User::get();
        } else {
@@ -34,15 +33,16 @@ class UserController extends Controller
     //
     public function post(Request $data)
     {
-        try{
+       
+         try{
             DB::beginTransaction();
             $result = $data->json()->all();
-            $user = users::create([
+            $user = User::create([
                 'nombre'=>$result['nombre'],
                 'apellido'=>$result['apellido'],
                 'usuario'=>$result['usuario'],
-                'email'=>$result['email'],
                 'carrera'=>$result['carrera'],
+                'email'=>$result['email'],
                 'password'=>$result['password']
                 ]);
                 DB::commit();
@@ -51,14 +51,14 @@ class UserController extends Controller
                 return response()->json($e,400);
              }
                 return response()->json($user,200);    
-        }
+         }
 
     public function validarUsuario(Request $data){
       $result = $data->json()->all();
       $email = DB::table('users')
-            ->select('nombre', 'pasword')
+            ->select('email', 'pasword')
             ->where('email',$result['email']);
-      if($email->email == $result['email'] && $email->pasword == $result['pasword']){
+      if($email->email == $result['email'] && $mail->pasword == $result['pasword']){
 
          return true;
 
@@ -69,7 +69,9 @@ class UserController extends Controller
             
     }
     public function eliminarUsuario(Request $data){
-
+      $result = $data->json()->all();
+       $id = $result['id'];
+       return User::destroy($id);
     }
     
     //

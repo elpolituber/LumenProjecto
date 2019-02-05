@@ -21,7 +21,7 @@
         $router->post('/users', ['uses' => 'UserController@post']);
         $router->get('/users', ['uses' => 'UserController@get']);
         $router->delete('/users', ['uses' => 'UserController@eliminarUsuario']);
-
+        
     //publicaciones
         $router->put('/publications', ['uses' => 'PublicacionController@editarPublicacion']);
         $router->post('/publications', ['uses' =>'PublicacionController@crearPublicacion']);
