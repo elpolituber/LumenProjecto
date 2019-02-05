@@ -28,7 +28,7 @@ class PublicacionController extends Controller
             $publication = new Publication();
             $publication->id = $result['id'];
             $publication->detalle = $result['detalle'];
-            $publication->id_user = $result['id_user'];
+            $publication->user_id = $result['user_id'];
             $publication->save();
             DB::commit();
      } catch (Exception $e) {

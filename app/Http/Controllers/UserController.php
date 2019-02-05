@@ -8,6 +8,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
+
 class UserController extends Controller
 {
     /**
@@ -55,11 +56,14 @@ class UserController extends Controller
                DB::beginTransaction();
                   $result = $data->json()->all();
                   $user = new User();
+                  //
                   $user->id = $result['id'];
                   $user->nombre = $result['nombre'];
+                  $user->apellido = $result['apellido'];
                   $user->usuario = $result['usuario'];
                   $user->carrera = $result['carrera'];
                   $user->email = $result['email'];
+                  $user->pasword = $result['pasword'];
                   $user->save();
                   DB::commit();
          }catch (Exception $e) {
@@ -81,7 +85,17 @@ class UserController extends Controller
          
          return false;
       }
+      //vLIDAR USUARIO
+
+      if(!$result['email'] OR !$result['pasword']){
+
+         $respuesta = array(
+            'errror'=> TRUE,
+            "mensaje"=> 'L ainformacipn no validdad');
+            return $respuesta;
+      }
             
+      $user = DB::select('');
     }
    public function eliminarUsuario(Request $data){
       $result = $data->json()->all();
