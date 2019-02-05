@@ -21,8 +21,26 @@ class UserController extends Controller
         
    
     }
-    function get(Request $data)
-    {
+    
+    function put(Request $data){
+       try{
+          DB::beginTransaction();
+          $result = $data->json()->all();
+          $user = User::where('id',$result['id'])->update([
+             'id'=>$result['id'],
+             'nombre'=>$result['nombre'],
+             'usuario'=>$result['usuario'],
+             'carrera'=>$result['carrera'],
+             'email'=>$result['email'],
+          ]);
+          DB::commit();
+       } catch (Exception $e) {
+          return response()->json($e,400);
+       }
+       return response()->json($user,200);
+    }
+    
+    function get(Request $data){
        $id = $data['id'];
        if ($id == null) {
           return User::get();
@@ -31,28 +49,25 @@ class UserController extends Controller
        }
     }
     //
-    public function post(Request $data)
-    {
-       
-         try{
-            DB::beginTransaction();
-            $result = $data->json()->all();
-            $user = User::create([
-                'nombre'=>$result['nombre'],
-                'apellido'=>$result['apellido'],
-                'usuario'=>$result['usuario'],
-                'carrera'=>$result['carrera'],
-                'email'=>$result['email'],
-                'password'=>$result['password']
-                ]);
-                DB::commit();
-             } catch (Exception $e) {
-                
-                return response()->json($e,400);
-             }
-                return response()->json($user,200);    
-         }
 
+    public function post(Request $data){
+      try{
+               DB::beginTransaction();
+                  $result = $data->json()->all();
+                  $user = new User();
+                  $user->id = $result['id'];
+                  $user->nombre = $result['nombre'];
+                  $user->usuario = $result['usuario'];
+                  $user->carrera = $result['carrera'];
+                  $user->email = $result['email'];
+                  $user->save();
+                  DB::commit();
+         }catch (Exception $e) {
+               return response()->json($e,400);
+                  }
+         return response()->json($user,200);
+   }
+        
     public function validarUsuario(Request $data){
       $result = $data->json()->all();
       $email = DB::table('users')
@@ -68,7 +83,7 @@ class UserController extends Controller
       }
             
     }
-    public function eliminarUsuario(Request $data){
+   public function eliminarUsuario(Request $data){
       $result = $data->json()->all();
        $id = $result['id'];
        return User::destroy($id);

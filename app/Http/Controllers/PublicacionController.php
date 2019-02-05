@@ -22,36 +22,36 @@ class PublicacionController extends Controller
     }
     
     public function crearPublicacion(Request $data){
-        $result =$data->json()->all();
-            $fori=DB::table('users')
-                        ->select('id')
-                        ->where('email',$result['email'])->value('id');
-                        
-            /*$public=DB::table('publications')->insert([
-                            [
-                             'detalle'=> $result['detalle'], 
-                             'id_user'=>$fori
-                             ]
-                            ]);
-          */  try{
+       try{ 
             DB::beginTransaction();
-            $public = publication::create([
-                    'detalle'=>$result['detalle'],
-                    'id_user'=>$fori,
-                    "created_at"=>null,
-	                "updated_at"=>null
-            ]);
+            $result = $data->json()->all();
+            $publication = new Publication();
+            $publication->id = $result['id'];
+            $publication->detalle = $result['detalle'];
+            $publication->id_user = $result['id_user'];
+            $publication->save();
             DB::commit();
-        }catch (Exception $e) {
-       
-       return response()->json($fori,400);
-    }
-       return response()->json($public,200);   
+     } catch (Exception $e) {
+            return response()->json($e,400);
+     }
+            return response()->json($publication,200);   
     }
     
     public function editarPublicacion(Request $data){
-
-    }   
+           try{
+              DB::beginTransaction();
+              $result = $data->json()->all();
+              $publication = Publication::where('id',$result['id'])->update([
+                 'id'=>$result['id'],
+                 'detalle'=>$result['detalle'],
+              ]);
+              DB::commit();
+           } catch (Exception $e) {
+              return response()->json($e,400);
+           }
+           return response()->json($publication,200);
+        }
+    
     public function mostrarPublicacion(){
         
         $users = User::join('publications','users.id','=','publications.user_id')->get();
@@ -59,7 +59,9 @@ class PublicacionController extends Controller
         return response()->json($users);
     }
     public function eliminarPublicacion(Request $data){
-        
+        $result = $data->json()->all();
+        $id = $result['id'];
+        return Publication::destroy($id);
     }
     
 }
