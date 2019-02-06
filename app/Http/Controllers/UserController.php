@@ -28,7 +28,7 @@ class UserController extends Controller
           DB::beginTransaction();
           $result = $data->json()->all();
           $user = User::where('id',$result['id'])->update([
-             'id'=>$result['id'],
+             //'id'=>$result['id'],
              'nombre'=>$result['nombre'],
              'usuario'=>$result['usuario'],
              'carrera'=>$result['carrera'],
@@ -57,7 +57,7 @@ class UserController extends Controller
                   $result = $data->json()->all();
                   $user = new User();
                   //
-                  $user->id = $result['id'];
+                  //$user->id = $result['id'];
                   $user->nombre = $result['nombre'];
                   $user->apellido = $result['apellido'];
                   $user->usuario = $result['usuario'];
@@ -75,18 +75,19 @@ class UserController extends Controller
     public function validarUsuario(Request $data){
       $result = $data->json()->all();
       $email = DB::table('users')
-            ->select('email', 'pasword')
-            ->where('email',$result['email']);
-      if($email->email == $result['email'] && $mail->pasword == $result['pasword']){
+            ->select('id','nombre','usuario','apellido','usuario','carrera','email', 'pasword')
+            ->where('email',$result['email'])->first();
+      if($email->email == $result['email'] && $email->pasword == $result['pasword']){
 
-         return true;
+         return response()->json($email,200);
+        // return response()->json('as iniciado sesion',200);
 
       }else{
          
-         return false;
+         return response()->json('datos incorrectos' , 300);
       }
       //vLIDAR USUARIO
-
+/*
       if(!$result['email'] OR !$result['pasword']){
 
          $respuesta = array(
@@ -95,8 +96,25 @@ class UserController extends Controller
             return $respuesta;
       }
             
-      $user = DB::select('');
-    }
+      $user = DB::select('SELECT * FROM users WHERE "email" = "'.$data['email'].'" and pasword
+"'.$data['pasword'].'"');
+
+//validacion}
+if(!$user){
+   $respuesta = array(
+      'errror'=> TRUE,
+      "mensaje"=> 'L ainformacipn no validdad');
+
+      return $respuesta;
+   
+}
+
+$respuesta = array(
+   'errror'=> TRUE,
+   "mensaje"=> 'L ainformacipn es valida');
+
+   return $respuesta;
+    }*/}
    public function eliminarUsuario(Request $data){
       $result = $data->json()->all();
        $id = $result['id'];

@@ -19,7 +19,7 @@ $router->get('/', function () use ($router) {
     //Usuarios
         $router->post('/login', ['uses' =>'UserController@validarUsuario']);
         $router->post('/users', ['uses' => 'UserController@post']);
-        $router->get('/users', ['uses' => 'UserController@get']);
+        $router->post('/users_g', ['uses' => 'UserController@get']);
         $router->delete('/users', ['uses' => 'UserController@eliminarUsuario']);
         
     //publicaciones

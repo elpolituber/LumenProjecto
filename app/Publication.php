@@ -18,7 +18,7 @@ class Publication extends Model implements AuthenticatableContract, Authorizable
      * @var array
      */
     protected $fillable = [
-      'id','detalle',
+      'detalle','user_id'
     ];
 
     /**

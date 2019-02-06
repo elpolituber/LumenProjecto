@@ -26,7 +26,7 @@ class PublicacionController extends Controller
             DB::beginTransaction();
             $result = $data->json()->all();
             $publication = new Publication();
-            $publication->id = $result['id'];
+//            $publication->id = $result['id'];
             $publication->detalle = $result['detalle'];
             $publication->user_id = $result['user_id'];
             $publication->save();
@@ -42,7 +42,7 @@ class PublicacionController extends Controller
               DB::beginTransaction();
               $result = $data->json()->all();
               $publication = Publication::where('id',$result['id'])->update([
-                 'id'=>$result['id'],
+                 //'id'=>$result['id'],
                  'detalle'=>$result['detalle'],
               ]);
               DB::commit();
