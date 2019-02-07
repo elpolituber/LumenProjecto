@@ -30,9 +30,11 @@ class UserController extends Controller
           $user = User::where('id',$result['id'])->update([
              //'id'=>$result['id'],
              'nombre'=>$result['nombre'],
-             'usuario'=>$result['usuario'],
+             'apellido'=>$result['apellido'],
              'carrera'=>$result['carrera'],
+             'usuario'=>$result['usuario'],
              'email'=>$result['email'],
+             'pasword'=>$result['pasword'],
           ]);
           DB::commit();
        } catch (Exception $e) {
@@ -86,35 +88,7 @@ class UserController extends Controller
          
          return response()->json(false , 300);
       }
-      //vLIDAR USUARIO
-/*
-      if(!$result['email'] OR !$result['pasword']){
-
-         $respuesta = array(
-            'errror'=> TRUE,
-            "mensaje"=> 'L ainformacipn no validdad');
-            return $respuesta;
-      }
-            
-      $user = DB::select('SELECT * FROM users WHERE "email" = "'.$data['email'].'" and pasword
-"'.$data['pasword'].'"');
-
-//validacion}
-if(!$user){
-   $respuesta = array(
-      'errror'=> TRUE,
-      "mensaje"=> 'L ainformacipn no validdad');
-
-      return $respuesta;
-   
-}
-
-$respuesta = array(
-   'errror'=> TRUE,
-   "mensaje"=> 'L ainformacipn es valida');
-
-   return $respuesta;
-    }*/}
+     }
    public function eliminarUsuario(Request $data){
       $result = $data->json()->all();
        $id = $result['id'];
