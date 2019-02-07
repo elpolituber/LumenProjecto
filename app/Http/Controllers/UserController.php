@@ -88,7 +88,7 @@ class UserController extends Controller
 
       }else{
          
-         return response()->json(null , 300);
+         return response()->json("null" , 300);
       }
      }
 
