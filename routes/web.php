@@ -23,8 +23,8 @@ $router->get('/', function () use ($router) {
         $router->delete('/users', ['uses' => 'UserController@eliminarUsuario']);
         
     //publicaciones
-        $router->put('/publications', ['uses' => 'PublicacionController@editarPublicacion']);
+        $router->post('/publicationsM',['uses' =>'PublicacionController@mostrarPublicacion']);
         $router->post('/publications', ['uses' =>'PublicacionController@crearPublicacion']);
+        $router->put('/publications', ['uses' => 'PublicacionController@editarPublicacion']);
         $router->delete('/publications',['uses' => 'PublicacionController@eliminarPublicacion']);
-        $router->get('/publications',['uses' =>'PublicacionController@mostrarPublicacion']);
     
