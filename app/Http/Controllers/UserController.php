@@ -23,7 +23,15 @@ class UserController extends Controller
    
     }
     
-    function put(Request $data){
+   function get(Request $data){
+      $id = $data['id'];
+      if ($id == null) {
+         return User::get();
+      } else {
+         return User::findOrFail($id);
+      }
+   }
+   function put(Request $data){
        try{
           DB::beginTransaction();
           $result = $data->json()->all();
@@ -43,14 +51,7 @@ class UserController extends Controller
        return response()->json($user,200);
     }
     
-    function get(Request $data){
-       $id = $data['id'];
-       if ($id == null) {
-          return User::get();
-       } else {
-          return User::findOrFail($id);
-       }
-    }
+    
     //
 
     public function post(Request $data){
@@ -77,11 +78,12 @@ class UserController extends Controller
     public function validarUsuario(Request $data){
       $result = $data->json()->all();
       $email = DB::table('users')
-            ->select('id','nombre','usuario','apellido','usuario','carrera','email', 'pasword')
+            ->select('id','email', 'pasword')
             ->where('email',$result['email'])->first();
       if($email->email == $result['email'] && $email->pasword == $result['pasword']){
-
-         return response()->json($email,200);
+         $id = $email->id;
+         $mostrar = User::findOrFail($id);
+         return response()->json($mostrar,200);
         // return response()->json('as iniciado sesion',200);
 
       }else{
@@ -89,6 +91,7 @@ class UserController extends Controller
          return response()->json(false , 300);
       }
      }
+
    public function eliminarUsuario(Request $data){
       $result = $data->json()->all();
        $id = $result['id'];
