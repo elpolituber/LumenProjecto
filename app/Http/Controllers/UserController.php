@@ -84,7 +84,7 @@ class UserController extends Controller
 
       }else{
          
-         return response()->json('datos incorrectos' , 300);
+         return response()->json(false , 300);
       }
       //vLIDAR USUARIO
 /*
